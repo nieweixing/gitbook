@@ -54,3 +54,5 @@
 * [如何阅读k8s源码](2020-11-11-如何阅读k8s源码.md)
 * [k8s之securityContext](2020-11-16-k8s之securityContext.md)
 * [Kubernetes之多集群的访问](2020-11-25-Kubernetes之多集群的访问.md)
+* [k8s之externaltrafficpolicy保留客户端源ip](2020-11-26-k8s之externaltrafficpolicy保留客户端源ip)
+
