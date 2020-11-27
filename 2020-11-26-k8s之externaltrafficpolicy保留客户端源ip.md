@@ -77,6 +77,10 @@ nginx-externaltrafficpolicy   NodePort       172.16.22.159   <none>          80:
 -A KUBE-NODEPORTS -p tcp -m comment --comment "test/nginx-externaltrafficpolicy:80-80-tcp" -m tcp --dport 31015 -j KUBE-XLB-3LS5F4HE6J2O753K
 ```
 
+:KUBE-MARK-MASQ - [0:0] /*对于符合条件的包 set mark 0x4000, 有此标记的数据包会在KUBE-POSTROUTING chain中统一做MASQUERADE*/
+
+对于KUBE-MARK-MASQ链中所有规则设置了kubernetes独有MARK标记，在KUBE-POSTROUTING链中对NODE节点上匹配kubernetes独有MARK标记的数据包，进行SNAT处理。
+
 查看节点上nginx-externaltrafficpolicy的nodeport端口的iptables规则，细心的你肯定发现有个地方和Cluster类型的是不一样的，那就是第一条规则中加了一个源ip网段的访问限制，默认只有127.0.0.0/8才能访问这个，那么Local模式的原理这里就清楚了，其实就是这个iptables规则配置的源ip导致的。
 
 这也就是为啥你访问对应的nodeport的时候，只有pod所在的节点才能访问通，我们在同一个vpc下非集群节点进行访问nginx-externaltrafficpolicy这个pod测试一下
